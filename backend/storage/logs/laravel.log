@@ -5296,3 +5296,7 @@ q%90��5�P\u001f.�g\u001b$�\u0006N�D�du�\"]/�\u001eN��`\u0
 #38 C:/xampp/htdocs/capture-app/backend/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('C://xampp//htdocs...')
 #39 {main}
 "} 
+[2026-10-29 07:22:04] local.ERROR: Maximum execution time of 60 seconds exceeded {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Maximum execution time of 60 seconds exceeded at C:/xampp/htdocs/capture-app/backend/vendor/laravel/serializable-closure/src/Signers/Hmac.php:7)
+[stacktrace]
+#0 {main}
+"} 
