@@ -2,3 +2,27 @@ kind: wasmer.io/App.v0
 name: capture-app
 owner: aot_oladeji
 package: .
+app_id: da_RxJIdtAU03WM
+jobs:
+- name: after_deploy
+  trigger: post-deployment
+  action:
+    execute:
+      command: after_deploy
+annotations:
+  anybuild.run/config:
+    composer_build_script: post-update-cmd
+    composer_enable: true
+    name: out
+    node_install_inputs:
+    - package.json
+    node_package_manager: npm
+    node_package_name: capture-app
+    npm_version: '11'
+    php_framework: laravel
+    php_public_dir: public
+    phpix: true
+  anybuild.run/provider: laravel
+  anybuild.run/version: 0.33.2
+  wasmer.io/version: 7.5.0
+enable_email: true
