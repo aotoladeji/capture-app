@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# Builds the React/Vite capture-app frontend straight into backend/public,
-# so Apache (pointed at backend/public as its DocumentRoot) serves both the
-# SPA and the Laravel API from one folder. Run this after any frontend
-# change and before deploying / reloading Apache.
+# Builds the React/Vite frontend straight into ./public, so the Laravel app
+# serves both the SPA and the API from one folder. Run after any frontend change.
 set -e
 
 cd "$(dirname "$0")/frontend"
@@ -10,15 +8,7 @@ cd "$(dirname "$0")/frontend"
 echo "Installing frontend dependencies..."
 npm install
 
-echo "Building frontend into ../backend/public ..."
+echo "Building frontend into ../public ..."
 npm run build
 
-# Wasmer's phpix serves static files from the repo root only, so mirror them there.
-cd ..
-rm -rf assets
-cp -r backend/public/assets assets
-for f in backend/public/*; do
-  case "$(basename "$f")" in index.php|index.html) ;; *) [ -f "$f" ] && cp "$f" . ;; esac
-done
-
-echo "Done. backend/public now contains index.html + assets/ alongside index.php."
+echo "Done. public/ now contains index.html + assets/ alongside index.php."

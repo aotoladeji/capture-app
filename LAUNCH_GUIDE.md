@@ -1,14 +1,14 @@
 # ID Card Capture Platform — Launch Guide
 
 This folder contains the **whole capture app**: the Laravel API backend
-(`backend/`) and the React/Vite capture frontend (`frontend/`). The
-frontend builds straight into `backend/public`, so in production it's all
+(the project root) and the React/Vite capture frontend (`frontend/`). The
+frontend builds straight into `public`, so in production it's all
 served by one Apache vhost, on one URL, with no CORS to configure.
 
 ```
 capture-app/
-├── build-frontend.sh    builds frontend/ into backend/public/
-├── backend/     Laravel app (API, capture, printing integration) — see backend/README.md
+├── build-frontend.sh    builds frontend/ into public/
+├── backend/     Laravel app (API, capture, printing integration) — see README.backend.md
 └── frontend/    React/Vite capture-app source
 ```
 
@@ -16,7 +16,7 @@ capture-app/
 > share one MySQL database (this app's login flow reads the management
 > app's `scheduled_students` table), and the management app calls this
 > app's `/api/printing/*` and `/api/verify/fingerprint` endpoints
-> directly. See `backend/README.md` §1 for the exact settings that must
+> directly. See `README.backend.md` §1 for the exact settings that must
 > match between the two. You'll typically run **both merged apps side by
 > side** on the same server, on two different ports/vhosts.
 
@@ -45,13 +45,13 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-Edit `backend/.env`:
+Edit `.env`:
 
 | Variable | What to set |
 |---|---|
 | `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` | same MySQL database as the management app |
 | `JWT_SECRET` | a long random string — independent of the management app's own secret |
-| `VERIFY_API_KEY` | must match `VERIFY_API_KEY` in the management app's `backend/.env` |
+| `VERIFY_API_KEY` | must match `VERIFY_API_KEY` in the management app's `.env` |
 | `APP_URL` | the URL you'll access this app at, e.g. `http://localhost:5001` |
 
 Then:
@@ -85,7 +85,7 @@ page. `/api/...` is handled by Laravel directly; everything else serves
 the built React app.
 
 **Production (Apache):** same pattern as the management app —
-`backend/deploy/apache-vhost.conf` has a starting vhost. This app needs
+`deploy/apache-vhost.conf` has a starting vhost. This app needs
 its **own port or subdomain**, separate from the management app (it's
 whatever `CAPTURE_APP_URL` points to in that app's `.env`).
 
@@ -110,4 +110,4 @@ before this is reachable outside your own machine.
   the `scheduled_students` table exists and this app's `DB_DATABASE`
   really is the management app's database, not a separate one.
 - **"Frontend build not found" at `/`:** run `./build-frontend.sh`.
-- Everything else is documented in `backend/README.md`.
+- Everything else is documented in `README.backend.md`.
