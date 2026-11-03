@@ -8,7 +8,7 @@ annotations:
   anybuild.run/version: 0.33.2
   wasmer.io/version: 7.5.0
 app_id: da_nkPI5tJUqlzG
-enableDatabase: true
+enableDatabase: false
 enable_email: true
 env:
   PHPIX_PHP_THREADS: '4'
