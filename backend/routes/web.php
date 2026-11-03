@@ -14,6 +14,20 @@ use Illuminate\Support\Facades\Route;
 | first.
 */
 
+// One-off migration trigger for hosts without a shell. Disabled unless SETUP_TOKEN is set.
+Route::get('/setup/migrate/{token}', function (string $token) {
+    $expected = (string) env('SETUP_TOKEN', '');
+
+    if ($expected === '' || ! hash_equals($expected, $token)) {
+        abort(404);
+    }
+
+    \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+
+    return response(\Illuminate\Support\Facades\Artisan::output(), 200)
+        ->header('Content-Type', 'text/plain; charset=UTF-8');
+});
+
 Route::get('/{any}', function () {
     $indexFile = public_path('index.html');
 
