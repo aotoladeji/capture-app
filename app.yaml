@@ -1,0 +1,18 @@
+annotations:
+  anybuild.run/config:
+    composer_build_script: post-update-cmd
+    composer_enable: true
+    name: out
+    phpix: true
+  anybuild.run/provider: php
+  anybuild.run/version: 0.33.2
+  wasmer.io/version: 7.5.0
+app_id: da_nkPI5tJUqlzG
+enableDatabase: true
+enable_email: true
+env:
+  PHPIX_PHP_THREADS: '4'
+kind: wasmer.io/App.v0
+name: capture-app
+owner: aot_oladeji
+package: sha256:4865a4c7f71d46078d3a080a53c28a05bd69964cb447168fe3dc69e12e044a81
