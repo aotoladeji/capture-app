@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ID Card Test - Correct Layout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        .card {
+            width: 336px;
+            height: 212px;
+            position: relative;
+            background-image: url('/blank_card.jpeg');
+            background-size: cover;
+            font-size: 11px;
+            border: 1px solid #ccc;
+        }
+        .text { position: absolute; }
+        .bold { font-weight: bold; }
+        h2 { color: #333; }
+        .info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f5e9;
+            border-radius: 4px;
+        }
+        .error {
+            background: #ffebee;
+            color: #c62828;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>✅ CORRECT Layout (What it SHOULD look like)</h2>
+        
+        <div class="card">
+            <!-- Text at x=75 (moved left) -->
+            <div class="text" style="top: 68px; left: 75px;">251791</div>
+            <div class="text bold" style="top: 86px; left: 75px;">EYOH</div>
+            <div class="text" style="top: 104px; left: 75px;">Chinyere Margaret</div>
+            <div class="text" style="top: 122px; left: 75px;">Centre for Child & Adolesc Mental Health</div>
+            <div class="text" style="top: 140px; left: 75px;">Centre for Child & Adolesc Mental Health</div>
+            <div class="text" style="top: 158px; left: 75px;">Masters</div>
+            <div class="text" style="top: 176px; left: 75px;">Abdusalami Abubaka</div>
+            
+            <!-- Card number - bottom left -->
+            <div class="text" style="bottom: 8px; left: 10px; font-size: 9px;">2025-04416</div>
+            
+            <!-- Barcode at x=144 NOT CENTERED -->
+            <div style="position: absolute; bottom: 18px; left: 144px; width: 48px; height: 10px;">
+                <svg width="48" height="10" viewBox="0 0 48 10">
+                    <rect x="0" y="0" width="2" height="10" fill="black" />
+                    <rect x="4" y="0" width="3" height="10" fill="black" />
+                    <rect x="9" y="0" width="1" height="10" fill="black" />
+                    <rect x="12" y="0" width="2" height="10" fill="black" />
+                    <rect x="16" y="0" width="4" height="10" fill="black" />
+                    <rect x="22" y="0" width="2" height="10" fill="black" />
+                    <rect x="26" y="0" width="3" height="10" fill="black" />
+                    <rect x="31" y="0" width="1" height="10" fill="black" />
+                    <rect x="34" y="0" width="2" height="10" fill="black" />
+                    <rect x="38" y="0" width="4" height="10" fill="black" />
+                    <rect x="44" y="0" width="2" height="10" fill="black" />
+                </svg>
+            </div>
+            
+            <!-- Session vertical at right=12 -->
+            <div style="position: absolute; top: 85px; right: 12px; writing-mode: vertical-rl; transform: rotate(180deg); font-size: 9px; font-weight: bold;">
+                2024/25-2025/26
+            </div>
+        </div>
+        
+        <div class="info">
+            <h3>✅ Correct Features:</h3>
+            <ul>
+                <li>Barcode at LEFT (x=144), NOT centered</li>
+                <li>Text starts at x=75 (less empty space)</li>
+                <li>Session "2024/25-2025/26" fully visible on right</li>
+                <li>Card number at bottom left</li>
+            </ul>
+        </div>
+        
+        <div class="info error">
+            <h3>❌ Your Modal Shows (WRONG):</h3>
+            <ul>
+                <li>Barcode CENTERED (wrong!)</li>
+                <li>Text at x=85 (too much empty space)</li>
+                <li>Session cut off</li>
+                <li>This is OLD CACHED version</li>
+            </ul>
+        </div>
+        
+        <div class="info">
+            <h3>🔧 How to Fix:</h3>
+            <ol>
+                <li>Close ALL browser tabs</li>
+                <li>Clear browser cache completely</li>
+                <li>Open in Incognito mode (Ctrl+Shift+N)</li>
+                <li>Go to: <code>http://localhost:3000</code></li>
+            </ol>
+            <p><strong>OR test backend directly:</strong></p>
+            <p><a href="http://localhost:5001/api/idcard/preview-print/43" target="_blank">
+                http://localhost:5001/api/idcard/preview-print/43
+            </a></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ID Card Layout Test - FINAL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .card-wrapper {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border: 2px solid #ddd;
+        }
+        .card {
+            width: 336px;
+            height: 212px;
+            position: relative;
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            background-image: url('/blank_card.jpeg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin: 0 auto;
+        }
+        .label {
+            position: absolute;
+            color: #000;
+        }
+        .bold {
+            font-weight: bold;
+        }
+        h1 {
+            color: #333;
+        }
+        h2 {
+            color: #666;
+            margin-top: 30px;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .success {
+            background: #c8e6c9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .backend-test {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 ID Card Layout - FINAL TEST</h1>
+        
+        <div class="success">
+            <strong>✅ This is a FRESH page with NO caching</strong><br>
+            This page is loaded directly from disk, bypassing all JavaScript bundlers and caches.
+        </div>
+
+        <div class="info">
+            <strong>📏 Layout Specifications (from card_43_complete.svg):</strong><br>
+            • Text starts at x=85 (NOT x=75)<br>
+            • Barcode at x=144, bottom=18 (NOT centered)<br>
+            • Card number at x=10, bottom=8<br>
+            • Photo at right=24 (x=234)<br>
+            • Signature at right=24 (x=234)<br>
+            • Session at right=12 (x=324), vertical
+        </div>
+
+        <h2>Frontend Card Preview (WITH Background)</h2>
+        <div class="card-wrapper">
+            <div class="card">
+                <!-- Text at x=85 -->
+                <div class="label" style="top: 68px; left: 85px;">251726</div>
+                <div class="label bold" style="top: 86px; left: 85px;">OYENUGA</div>
+                <div class="label" style="top: 104px; left: 85px;">Ibironke Oluwafunmilayo</div>
+                <div class="label" style="top: 122px; left: 85px;">Basic Medical Sciences</div>
+                <div class="label" style="top: 140px; left: 85px;">Pharmacology & Therapeutics</div>
+                <div class="label" style="top: 158px; left: 85px;">Masters</div>
+                <div class="label" style="top: 176px; left: 85px;">Abdusalami Abubaka</div>
+
+                <!-- Card number - bottom left -->
+                <div class="label" style="bottom: 8px; left: 10px; font-size: 9px;">2025-04350</div>
+
+                <!-- Barcode at x=144, bottom=18 -->
+                <div style="position: absolute; bottom: 18px; left: 144px; width: 48px; height: 10px;">
+                    <svg width="48" height="10" viewBox="0 0 48 10">
+                        <rect x="0" y="0" width="2" height="10" fill="black" />
+                        <rect x="4" y="0" width="3" height="10" fill="black" />
+                        <rect x="9" y="0" width="1" height="10" fill="black" />
+                        <rect x="12" y="0" width="2" height="10" fill="black" />
+                        <rect x="16" y="0" width="4" height="10" fill="black" />
+                        <rect x="22" y="0" width="2" height="10" fill="black" />
+                        <rect x="26" y="0" width="3" height="10" fill="black" />
+                        <rect x="31" y="0" width="1" height="10" fill="black" />
+                        <rect x="34" y="0" width="2" height="10" fill="black" />
+                        <rect x="38" y="0" width="4" height="10" fill="black" />
+                        <rect x="44" y="0" width="2" height="10" fill="black" />
+                    </svg>
+                </div>
+
+                <!-- Photo placeholder -->
+                <div style="position: absolute; top: 78px; right: 24px; width: 78px; height: 96px; background: #ddd; border: 1px solid #999; display: flex; align-items: center; justify-content: center; font-size: 10px;">
+                    PHOTO<br>78x96
+                </div>
+
+                <!-- Signature placeholder -->
+                <div style="position: absolute; top: 186px; right: 24px; width: 78px; height: 22px; background: #eee; border: 1px solid #999; display: flex; align-items: center; justify-content: center; font-size: 9px;">
+                    SIGNATURE
+                </div>
+
+                <!-- Session vertical -->
+                <div style="position: absolute; top: 85px; right: 12px; writing-mode: vertical-rl; transform: rotate(180deg); font-size: 9px; font-weight: bold;">
+                    2024/2025
+                </div>
+            </div>
+        </div>
+
+        <div class="backend-test">
+            <strong>🔧 Backend Test:</strong><br>
+            Open this URL to see the backend-generated card:<br>
+            <a href="http://localhost:5001/api/idcard/preview-print/43" target="_blank">
+                http://localhost:5001/api/idcard/preview-print/43
+            </a><br>
+            <small>(This shows the card WITHOUT background, as it will be printed)</small>
+        </div>
+
+        <div class="info">
+            <strong>✅ Verification Checklist:</strong><br>
+            □ Text starts at x=85 (not too far left, not too far right)<br>
+            □ Barcode is at x=144 (NOT centered)<br>
+            □ Barcode does NOT overlap any text<br>
+            □ Card number is at bottom left<br>
+            □ Photo and signature are on the right side<br>
+            □ Session is vertical on the far right edge<br>
+            □ Layout matches card_43_complete.svg reference
+        </div>
+
+        <h2>📝 Notes</h2>
+        <ul>
+            <li>This page loads directly from /public folder</li>
+            <li>No React, no Vite, no bundling, no caching</li>
+            <li>If this looks correct but the modal doesn't, it's a browser cache issue</li>
+            <li>Solution: Use Incognito mode or clear ALL browser data</li>
+        </ul>
+    </div>
+</body>
+</html>

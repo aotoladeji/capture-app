@@ -13,4 +13,12 @@ npm install
 echo "Building frontend into ../backend/public ..."
 npm run build
 
+# Wasmer's phpix serves static files from the repo root only, so mirror them there.
+cd ..
+rm -rf assets
+cp -r backend/public/assets assets
+for f in backend/public/*; do
+  case "$(basename "$f")" in index.php|index.html) ;; *) [ -f "$f" ] && cp "$f" . ;; esac
+done
+
 echo "Done. backend/public now contains index.html + assets/ alongside index.php."
