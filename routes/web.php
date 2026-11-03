@@ -28,6 +28,28 @@ Route::get('/setup/migrate/{token}', function (string $token) {
         ->header('Content-Type', 'text/plain; charset=UTF-8');
 });
 
+// Shows the DB settings the app actually resolved (never the password). Same SETUP_TOKEN guard.
+Route::get('/setup/db-info/{token}', function (string $token) {
+    $expected = (string) env('SETUP_TOKEN', '');
+
+    if ($expected === '' || ! hash_equals($expected, $token)) {
+        abort(404);
+    }
+
+    $c = config('database.connections.'.config('database.default'));
+
+    return response()->json([
+        'connection' => config('database.default'),
+        'host' => $c['host'] ?? null,
+        'port' => $c['port'] ?? null,
+        'database' => $c['database'] ?? null,
+        'username' => $c['username'] ?? null,
+        'env_file_present' => file_exists(base_path('.env')),
+        'raw_env_DB_HOST' => getenv('DB_HOST') ?: null,
+        'raw_env_DB_PORT' => getenv('DB_PORT') ?: null,
+    ]);
+});
+
 Route::get('/{any}', function () {
     $indexFile = public_path('index.html');
 
