@@ -1,0 +1,4 @@
+kind: wasmer.io/App.v0
+name: capture-app
+owner: aot_oladeji
+package: .
