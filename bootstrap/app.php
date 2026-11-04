@@ -19,6 +19,16 @@ return Application::configure(basePath: dirname(__DIR__))
             ForceJsonResponse::class,
         ]);
 
+        // Auth is JWT-only; the web group just serves the SPA's index.html, so
+        // skip session/cookie/CSRF handling (it needs a writable store and a valid APP_KEY).
+        $middleware->web(remove: [
+            \Illuminate\Cookie\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class,
+        ]);
+
         $middleware->alias([
             'auth.jwt' => JwtAuthenticate::class,
             'auth.apikey' => VerifyApiKey::class,
