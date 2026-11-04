@@ -20,10 +20,46 @@ use Illuminate\Support\Facades\Route;
 | service with an explicit /api/... path.
 */
 
+// One-off migration trigger for hosts without a shell. Disabled unless SETUP_TOKEN is set.
+Route::get('/setup/migrate/{token}', function (string $token) {
+    $expected = (string) env('SETUP_TOKEN', '');
+
+    if ($expected === '' || ! hash_equals($expected, $token)) {
+        abort(404);
+    }
+
+    \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+
+    return response(\Illuminate\Support\Facades\Artisan::output(), 200)
+        ->header('Content-Type', 'text/plain; charset=UTF-8');
+});
+
+// Shows the DB settings the app actually resolved (never the password). Same SETUP_TOKEN guard.
+Route::get('/setup/db-info/{token}', function (string $token) {
+    $expected = (string) env('SETUP_TOKEN', '');
+
+    if ($expected === '' || ! hash_equals($expected, $token)) {
+        abort(404);
+    }
+
+    $c = config('database.connections.'.config('database.default'));
+
+    return response()->json([
+        'connection' => config('database.default'),
+        'host' => $c['host'] ?? null,
+        'port' => $c['port'] ?? null,
+        'database' => $c['database'] ?? null,
+        'username' => $c['username'] ?? null,
+        'env_file_present' => file_exists(base_path('.env')),
+        'raw_env_DB_HOST' => getenv('DB_HOST') ?: null,
+        'raw_env_DB_PORT' => getenv('DB_PORT') ?: null,
+    ]);
+});
+
 // Health checks (server/app.js)
 Route::get('/health', [HealthController::class, 'health']);
 
-// Excel routes (server/routes/api.js) — data now comes only from the id-card-unit
+// Excel routes (server/routes/api.js) â€” data now comes only from the id-card-unit
 // management app's scheduling setup, imported via /excel/import-schedule below.
 Route::get('/excel/files', [ExcelController::class, 'files']);
 Route::put('/excel/activate/{fileId}', [ExcelController::class, 'activate']);
@@ -47,7 +83,7 @@ Route::post('/capture/fingerprint', [CaptureController::class, 'saveFingerprint'
 Route::post('/capture/passport', [CaptureController::class, 'savePassportPhoto']);
 Route::post('/generate-idcard', [CaptureController::class, 'generateIdCardForUser']);
 
-// External verification endpoints (protected by API key — see VERIFY_API_KEY)
+// External verification endpoints (protected by API key â€” see VERIFY_API_KEY)
 Route::post('/verify/fingerprint', [CaptureController::class, 'verifyFingerprint'])->middleware('auth.apikey');
 Route::get('/verify/fingerprint/templates/{userId}', [CaptureController::class, 'getFingerprintTemplates'])->middleware('auth.apikey');
 
