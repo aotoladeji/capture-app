@@ -58,7 +58,7 @@ const AdminPage = () => {
 
   const activateFile = async (fileId) => {
     try {
-      const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/excel/activate`, { fileId });
+      const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/excel/activate/${fileId}`);
       setMessage(`✅ ${response.data.message}`);
       fetchFiles();
     } catch (error) {
@@ -74,9 +74,7 @@ const AdminPage = () => {
 
       setMessage('');
       try {
-          const response = await axios.delete(`${import.meta.env.VITE_API_URL}/api/excel/files`, {
-          params: { fileId }
-          });
+          const response = await axios.delete(`${import.meta.env.VITE_API_URL}/api/excel/files/${fileId}`);
           setMessage(`✅ ${response.data.message}`);
           fetchFiles();
           fetchSchedules();
