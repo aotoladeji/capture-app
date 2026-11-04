@@ -165,12 +165,9 @@ class ExcelProcessorService
         $surname = trim($surname);
         $generatedCode = trim($generatedCode);
 
-        $this->ensureActiveScheduleSynced();
-
         if ($userType === 'student') {
             $row = DB::table('excel_data as ed')
                 ->join('excel_files as ef', 'ed.file_id', '=', 'ef.id')
-                ->where('ef.is_active', true)
                 ->whereRaw('LOWER(TRIM(COALESCE(ed.matric_no, \'\'))) = LOWER(TRIM(?))', [$identifier])
                 ->select('ed.*')
                 ->first();
@@ -207,7 +204,6 @@ class ExcelProcessorService
             // staff
             $row = DB::table('excel_data as ed')
                 ->join('excel_files as ef', 'ed.file_id', '=', 'ef.id')
-                ->where('ef.is_active', true)
                 ->whereRaw('LOWER(ed.surname) = LOWER(?)', [$surname])
                 ->where('ed.pf_number', $identifier)
                 ->select('ed.*')
